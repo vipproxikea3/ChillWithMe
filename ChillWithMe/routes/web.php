@@ -33,7 +33,7 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
     // Song
 
     // Room
-    Route::get('/rooms/{id}', [RoomController::class, 'index']);
+    Route::get('/rooms', [RoomController::class, 'index']);
 
     // User
     Route::get('/me', [UserController::class, 'index']);

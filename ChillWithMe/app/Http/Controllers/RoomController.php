@@ -8,11 +8,15 @@ use app\Models\User;
 
 class RoomController extends Controller
 {
-    public function index($id)
+    public function index(Request $req)
     {
+        $idRoom = $req->idRoom;
+        $room = User::find($idRoom);
+        if (!isset($room))
+            return redirect('404');
         $user = User::find(Auth::user()->id);
-        $user->idRoom = $id;
+        $user->idRoom = $req->idRoom;
         $user->save();
-        return $id;
+        return view('room', []);
     }
 }
