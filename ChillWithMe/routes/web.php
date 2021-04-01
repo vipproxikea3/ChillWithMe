@@ -3,6 +3,11 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\YoutubeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,13 +26,15 @@ Route::get('/', function () {
 });
 
 Route::middleware(['middleware' => 'auth'])->group(function () {
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    Route::get('/room/{id}', function ($id) {
-        return $id;
-    });
+    // Home
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    Route::get('/user', function () {
-        return Auth::user();
-    });
+    // Song
+
+    // Room
+    Route::get('/rooms/{id}', [RoomController::class, 'index']);
+
+    // User
+    Route::get('/me', [UserController::class, 'index']);
 });
