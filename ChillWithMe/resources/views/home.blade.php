@@ -5,7 +5,7 @@
     <div class="row">
         <form action="/rooms" method="GET">
             <input style="display: none;" type="text" name="idRoom" value="{{Auth::user()->id}}">
-            <button type="submit" id="myRoom" class="ml-3 btn btn-outline-success">
+            <button type="submit" id="myRoom" class="btn btn-outline-success">
                 <i class="fa fa-arrow-right mr-3" aria-hidden="true"></i>
                 <span>Phòng của tôi</span>
             </button>

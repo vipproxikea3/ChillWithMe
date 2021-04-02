@@ -3,6 +3,27 @@ body {
     color: #ffffff !important;
     background-color: #121212 !important;
 }
+/* width */
+::-webkit-scrollbar {
+    width: 0.5rem;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #aaa;
+    border-radius: 0.25rem;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    cursor: pointer;
+    background: #28a745;
+}
+
+.row {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
 
 a {
     color: #ffffff !important;
@@ -106,8 +127,8 @@ a:hover {
     background-color: transparent;
     border: 2px solid #28a745;
     border-radius: 2rem;
-    margin-left: 0px !important;
-    margin-right: 0px !important;
+    /* margin-left: 0px !important;
+    margin-right: 0px !important; */
 }
 
 .profile-field {
@@ -121,4 +142,105 @@ a:hover {
     height: 4rem;
     border-radius: 2rem;
     border-width: 2px;
+}
+
+.main-left {
+    padding-left: 0px !important;
+}
+
+#form-search {
+    width: 100%;
+}
+
+#input-search {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #28a745;
+    padding: 0.5rem 2rem;
+    height: 4rem;
+    border-radius: 2rem;
+    background: #121212;
+    color: #fff !important;
+}
+
+#input-search:focus {
+    outline: none;
+}
+
+.result-list {
+    overflow-y: scroll;
+    height: 30rem;
+}
+
+.result-item {
+    border-left-style: solid;
+    border-color: transparent;
+    background: transparent;
+    height: 6.5rem;
+    display: flex;
+    align-items: center;
+    transition: 0.5s;
+}
+
+.result-item:hover {
+    border-left-style: solid;
+    border-color: #28a745;
+    background: #282b2c;
+    cursor: pointer;
+}
+
+.result-item-thumbnail {
+    background: transparent;
+    flex-basis: 10rem;
+    height: 100%;
+    object-fit: cover;
+}
+
+.result-item-info {
+    background: transparent;
+    flex-basis: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex-grow: 1;
+}
+
+.result-item-info-title {
+    background: transparent;
+    font-size: 0.9rem;
+    width: 100%;
+    flex-basis: 1rem;
+    flex-grow: 3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.result-item-info-channel {
+    vertical-align: text-bottom;
+    font-size: 0.75rem;
+    color: #aaa;
+    width: 100%;
+    flex-basis: 2rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.main-right {
+    padding-left: 0px !important;
+}
+
+.playing-title {
+    width: 75%;
+}
+
+.playing-disk {
+    border-radius: 50%;
+    width: 15vw;
+    height: 15vw;
+    object-fit: cover;
+    animation-name: spin;
+    animation-duration: 25000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
 }
