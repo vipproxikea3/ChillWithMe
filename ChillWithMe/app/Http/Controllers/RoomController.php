@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use app\Models\User;
+use App\Models\Song;
 
 class RoomController extends Controller
 {
@@ -17,6 +18,11 @@ class RoomController extends Controller
         $user = User::find(Auth::user()->id);
         $user->idRoom = $req->idRoom;
         $user->save();
-        return view('room', []);
+        $songs = Song::where('idRoom', $idRoom)->get();
+        return view('room', [
+            'idRoom' => $room->id,
+            'masterRoom' => $room->name,
+            'songs' => $songs
+        ]);
     }
 }

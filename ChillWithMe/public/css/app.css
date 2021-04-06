@@ -144,6 +144,11 @@ a:hover {
     border-width: 2px;
 }
 
+.room-content {
+    padding-left: 5rem !important;
+    padding-right: 5rem !important;
+}
+
 .main-left {
     padding-left: 0px !important;
 }
@@ -227,20 +232,59 @@ a:hover {
 }
 
 .main-right {
-    padding-left: 0px !important;
+    padding-right: 0px !important;
 }
 
 .playing-title {
-    width: 75%;
+    margin-left: 5rem !important;
+    margin-right: 5rem !important;
 }
 
 .playing-disk {
+    background: transparent;
+    border: none;
     border-radius: 50%;
-    width: 15vw;
-    height: 15vw;
+    width: 10vw;
+    height: 10vw;
     object-fit: cover;
     animation-name: spin;
     animation-duration: 25000ms;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.queue {
+    overflow-y: scroll;
+    height: 21rem;
+}
+
+.queue-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 3rem;
+}
+
+.queue-item-title {
+    flex-basis: 1rem;
+    flex-grow: 1;
+    height: 100%;
+    overflow: hidden;
+}
+
+.queue-item-prioritize {
+    flex-basis: auto;
+}
+
+.queue-item-play {
+    flex-basis: auto;
 }
