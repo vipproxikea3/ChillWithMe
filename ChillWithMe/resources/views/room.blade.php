@@ -39,17 +39,12 @@
                     <i class="fa fa-step-forward" aria-hidden="true"></i>
                 </button>
             </div>
-            <div class="queue">
+            <div id="queue" class="queue">
                 @foreach ($songs as $song)
                 <div class="row queue-item my-3 px-5">
                     <div class="queue-item-title d-flex flex-column justify-content-center">
                         <span>{{$song->title}}
                         </span>
-                    </div>
-                    <div class="queue-item-prioritize">
-                        <button style="border: none;" type="button" class="btn btn-outline-success">
-                            <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                        </button>
                     </div>
                     <div class="queue-item-play">
                         <button style="border: none;" type="button" class="btn btn-outline-success">

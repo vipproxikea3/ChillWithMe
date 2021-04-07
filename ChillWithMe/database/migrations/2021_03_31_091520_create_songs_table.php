@@ -17,10 +17,10 @@ class CreateSongsTable extends Migration
             $table->id();
             $table->integer('idRoom');
             $table->integer('idUser');
-            $table->integer('idVideo');
+            $table->string('idVideo');
             $table->string('title');
             $table->string('thumbnail');
-            $table->string('chanelTitle');
+            $table->string('channelTitle');
             $table->timestamps();
         });
     }

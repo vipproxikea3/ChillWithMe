@@ -7,6 +7,18 @@ function init() {
     });
 }
 
+// Enable pusher logging - don't include this in production
+Pusher.logToConsole = true;
+
+var pusher = new Pusher("3b2d88af5666682a41c0", {
+    cluster: "ap1",
+});
+
+var channel = pusher.subscribe("test-channel");
+channel.bind("test-event", function (data) {
+    renderQueue(data);
+});
+
 $("document").ready(function () {
     // Submit search form
     $("#form-search").on("submit", function (e) {
@@ -25,7 +37,7 @@ $("document").ready(function () {
             data: {
                 part: "snippet,id",
                 q: keyword,
-                maxResults: 50,
+                maxResults: 100,
                 type: "video",
                 key: apiKey,
             },
@@ -84,5 +96,48 @@ function addQueue(item) {
     var thumbnail = item.getAttribute("data-item-thumbnail");
     var title = item.getAttribute("data-item-title");
     var channeltitle = item.getAttribute("data-item-channeltitle");
-    alert(idVideo + thumbnail + title + channeltitle);
+    var idUser = $("#navbarDropdown").attr("data-iduser");
+    var idRoom = $("#navbarDropdown").attr("data-idroom");
+
+    var token = $('input[name="_token"]').val();
+
+    $.ajax({
+        type: "POST",
+        url: "/songs/queue",
+        data: {
+            idVideo: idVideo,
+            thumbnail: thumbnail,
+            title: title,
+            channeltitle: channeltitle,
+            idRoom: idRoom,
+            idUser: idUser,
+            _token: token,
+        },
+        success: function (data) {
+            console.log(data);
+        },
+    });
+}
+
+// render Queue
+function renderQueue(queue) {
+    $("#queue").html("");
+    var content = "";
+    for (var i = 0; i < queue.length; i++) {
+        if (queue.length > 0) {
+            var item = `<div class="row queue-item my-3 px-5">
+                    <div class="queue-item-title d-flex flex-column justify-content-center">
+                        <span>${queue[i].title}
+                        </span>
+                    </div>
+                    <div class="queue-item-play">
+                        <button style="border: none;" type="button" class="btn btn-outline-success">
+                            <i class="fa fa-play" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>`;
+            content = content + item;
+        }
+    }
+    $("#queue").append(content);
 }
