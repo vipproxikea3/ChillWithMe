@@ -1,5 +1,6 @@
 var apiKey = "AIzaSyAZ0Co-nk2eOGd5x535zJV6E39gwu3s73Y";
 var keyword;
+var message;
 function init() {
     gapi.client.setApiKey(apiKey);
     gapi.client.load("youtube", "v3", function () {
@@ -14,9 +15,15 @@ var pusher = new Pusher("3b2d88af5666682a41c0", {
     cluster: "ap1",
 });
 
-var channel = pusher.subscribe("test-channel");
-channel.bind("test-event", function (data) {
+var channel = pusher.subscribe("room");
+channel.bind("queue", function (data) {
     renderQueue(data);
+});
+channel.bind("play", function (data) {
+    play(data);
+});
+channel.bind("messages", function (data) {
+    renderMessages(data);
 });
 
 $("document").ready(function () {
@@ -25,7 +32,6 @@ $("document").ready(function () {
         e.preventDefault();
         keyword = $("#input-search").val();
         if (keyword == "") return;
-        console.log(keyword);
         search(keyword);
     });
 
@@ -88,7 +94,43 @@ $("document").ready(function () {
             "</div>";
         return output;
     }
+
+    // Submit message form
+    $("#form-message").on("submit", function (e) {
+        e.preventDefault();
+        message = $("#input-message").val();
+        $("#input-message").val("");
+        if (message == "") return;
+        sendMessage(message);
+    });
+
+    // Send Message
+    function sendMessage(message) {
+        console.log(message);
+        var idUser = $("#navbarDropdown").attr("data-iduser");
+        var idRoom = $("#idRoom").attr("data-idroom");
+        var token = $('input[name="_token"]').val();
+
+        $.ajax({
+            type: "post",
+            url: "/rooms/messages",
+            data: {
+                message: message,
+                idRoom: idRoom,
+                idUser: idUser,
+                _token: token,
+            },
+            success: function (data) {
+                console.log(data);
+            },
+        });
+    }
 });
+
+// show Chat Box
+function showChatBox() {
+    $("#showChatBox").removeClass("chat-box-btn-new").addClass("chat-box-btn");
+}
 
 // add Queue
 function addQueue(item) {
@@ -97,7 +139,7 @@ function addQueue(item) {
     var title = item.getAttribute("data-item-title");
     var channeltitle = item.getAttribute("data-item-channeltitle");
     var idUser = $("#navbarDropdown").attr("data-iduser");
-    var idRoom = $("#navbarDropdown").attr("data-idroom");
+    var idRoom = $("#idRoom").attr("data-idroom");
 
     var token = $('input[name="_token"]').val();
 
@@ -121,6 +163,8 @@ function addQueue(item) {
 
 // render Queue
 function renderQueue(queue) {
+    if (queue.length == 0) return;
+    if (queue[0].idRoom != $("#idRoom").attr("data-idroom")) return;
     $("#queue").html("");
     var content = "";
     for (var i = 0; i < queue.length; i++) {
@@ -131,7 +175,7 @@ function renderQueue(queue) {
                         </span>
                     </div>
                     <div class="queue-item-play">
-                        <button style="border: none;" type="button" class="btn btn-outline-success">
+                        <button data-idsong="${queue[i].id}" onclick="playSong(this)" style="border: none;" type="button" class="btn btn-outline-success">
                             <i class="fa fa-play" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -140,4 +184,123 @@ function renderQueue(queue) {
         }
     }
     $("#queue").append(content);
+}
+
+function nextSong() {
+    var idRoom = $("#idRoom").attr("data-idroom");
+    var token = $('input[name="_token"]').val();
+    $.ajax({
+        type: "POST",
+        url: "/songs/next",
+        data: {
+            idRoom: idRoom,
+            _token: token,
+        },
+        success: function (data) {
+            console.log(data);
+        },
+    });
+}
+
+function playSong(song) {
+    var idSong = song.getAttribute("data-idsong");
+    var token = $('input[name="_token"]').val();
+
+    $.ajax({
+        type: "POST",
+        url: "/songs/play",
+        data: {
+            idSong: idSong,
+            _token: token,
+        },
+        success: function (data) {
+            console.log(data);
+        },
+    });
+}
+
+// Render Messages
+function renderMessages(messages) {
+    if (messages.count == 0) return;
+    var idRoom = $("#idRoom").attr("data-idroom");
+    if (messages[0].idRoom != idRoom) return;
+    if ($("#chatBoxModal").hasClass("show") == false) {
+        $("#showChatBox")
+            .removeClass("chat-box-btn")
+            .addClass("chat-box-btn-new");
+    }
+
+    var boxChatBody = $("#box-chat-body");
+    messages.reverse();
+    boxChatBody.html("");
+    var content = "";
+    messages.forEach((message) => {
+        var item = `<p><strong>${message.userName}: </strong>${message.message}</p>`;
+        content += item;
+    });
+    $("#box-chat-body").append(content);
+    console.log(messages);
+}
+
+// YOUTUBE
+var player;
+
+function play(video) {
+    let idRoom = video.idRoom;
+    if (idRoom != $("#idRoom").attr("data-idroom")) return;
+
+    let idVideo = video.idVideo;
+    let thumbnail = video.thumbnail;
+    let title = video.title;
+
+    if (player != null) {
+        player.loadVideoById({
+            videoId: idVideo,
+            startSeconds: 0,
+            suggestedQuality: "small",
+        });
+    } else {
+        player = new YT.Player("player", {
+            height: "582",
+            width: "1035",
+            videoId: idVideo,
+            events: {
+                onReady: onPlayerReady,
+                onStateChange: onPlayerStateChange,
+            },
+        });
+    }
+
+    $("#playing-disk").attr("src", thumbnail);
+    $("#playing-title").html("");
+    $("#playing-title").append(title);
+}
+
+function onPlayerReady(event) {
+    event.target.playVideo();
+}
+
+function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.ENDED) {
+        var idUser = $("#navbarDropdown").attr("data-iduser");
+        var idRoom = $("#idRoom").attr("data-idroom");
+        var token = $('input[name="_token"]').val();
+        if (idUser == idRoom) {
+            $.ajax({
+                type: "POST",
+                url: "/songs/next",
+                data: {
+                    idRoom: idRoom,
+                    _token: token,
+                },
+                success: function (data) {
+                    console.log(data);
+                },
+            });
+        }
+    }
+}
+
+function stopVideo() {
+    player.stopVideo();
 }

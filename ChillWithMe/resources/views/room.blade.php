@@ -4,38 +4,28 @@
 <div class="room-content container-fluid">
     <div class="row d-flex">
         <span class="mr-5"><strong>Chủ phòng: </strong>{{$masterRoom}}</span>
-        <span><strong>Mã phòng: </strong>{{$idRoom}}</span>
+        <span id="idRoom" data-idroom="{{ $user->idRoom }}"><strong>Mã phòng: </strong>{{$idRoom}}</span>
     </div>
     <div class="row mt-5">
         <div class="main-left col-7">
             <div class="row">
                 <form id="form-search">
-                    <input placeholder="Tìm kiếm bằng youtube" type="text" name="keyword" id="input-search">
+                    <input placeholder="Tìm kiếm" type="text" name="keyword" id="input-search">
                 </form>
             </div>
             <div class="row result-list mt-5">
                 <div id="result-list" class="col-12">
-                    <!-- <div class="row p-2 result-item">
-                        <img class="result-item-thumbnail" src="http://i3.ytimg.com/vi/erLk59H86ww/hqdefault.jpg" alt="">
-                        <div class="result-item-info pl-3">
-                            <div class="py-1 result-item-info-title">
-                                <span class="result-item-info-title-text">SGB vs. FL | GLX vs. SE (Bo3) - VCS Mùa Xuân 2021 - W9D2</span>
-                            </div>
-                            <div class="py-1 result-item-info-channel">
-                                VETV7 ESPORTS
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>
         <div class="main-right col-5">
-            <marquee class="row playing-title" direction="left"></marquee>
+            <div style="display: none;" id="player"></div>
+            <marquee id="playing-title" class="row playing-title" direction="left"></marquee>
             <div class="row d-flex justify-content-center my-3">
-                <img class="playing-disk" alt="">
+                <img id="playing-disk" class="playing-disk" alt="">
             </div>
             <div class="row d-flex justify-content-center my-3">
-                <button style="border: none;" type="button" class="btn btn-outline-success">
+                <button onclick="nextSong()" style="border: none;" type="button" class="btn btn-outline-success">
                     <i class="fa fa-step-forward" aria-hidden="true"></i>
                 </button>
             </div>
@@ -53,6 +43,39 @@
                     </div>
                 </div>
                 @endforeach
+            </div>
+        </div>
+    </div>
+    <!-- Button trigger modal -->
+    <button id="showChatBox" type="button" onclick="showChatBox()" class="chat-box-btn btn btn-outline-success btn-lg" data-toggle="modal" data-target="#chatBoxModal">
+        <i class="fa fa-comments" aria-hidden="true"></i>
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="chatBoxModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="box-chat modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Trò chuyện</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div id="box-chat-body" class="box-chat-body modal-body">
+                    @foreach ($messages as $message)
+                    <p><strong>{{$message->userName}}: </strong>{{$message->message}}</p>
+                    @endforeach
+                </div>
+                <div class="modal-footer">
+                    <form id="form-message" class="form-message" action="">
+                        <div class="input-group">
+                            <input name="message" id="input-message" type="text" class="form-control" required>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-success" type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

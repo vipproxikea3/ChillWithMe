@@ -288,3 +288,40 @@ a:hover {
 .queue-item-play {
     flex-basis: auto;
 }
+
+.box-chat {
+    color: #333;
+    height: 40rem;
+}
+
+.box-chat-body {
+    overflow: scroll;
+}
+
+.form-message {
+    width: 100%;
+}
+
+.chat-box-btn {
+    background: #121212 !important;
+    position: fixed;
+    z-index: 9;
+    right: 3rem;
+    bottom: 3rem;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50% !important;
+}
+
+.chat-box-btn-new {
+    background: #121212 !important;
+    position: fixed;
+    z-index: 9;
+    right: 3rem;
+    bottom: 3rem;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50% !important;
+    color: #f12949 !important;
+    border-color: #f12949 !important;
+}

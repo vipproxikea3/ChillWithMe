@@ -35,27 +35,13 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
 
     // Song
     Route::post('/songs/queue', [SongController::class, 'addQueue']);
+    Route::post('/songs/play', [SongController::class, 'playSong']);
+    Route::post('/songs/next', [SongController::class, 'nextSong']);
 
     // Room
     Route::get('/rooms', [RoomController::class, 'index']);
+    Route::post('/rooms/messages', [RoomController::class, 'sendMessages']);
 
     // User
     Route::get('/me', [UserController::class, 'index']);
-
-    // Pusher
-    // Route::post('/pusher', function () {
-    //     $message = 'hello';
-    //     $pusher = new Pusher(
-    //         env('PUSHER_APP_KEY'),
-    //         env('PUSHER_APP_SECRET'),
-    //         env('PUSHER_APP_ID'),
-    //         [
-    //             'cluster' => 'ap1',
-    //             'encrypted' => true
-    //         ]
-    //     );
-    //     //channel is auth role and id, ex: user_id_1 or influencer_id1
-    //     $pusher->trigger('test-channel', 'test-event', $message);
-    //     return 1;
-    // });
 });

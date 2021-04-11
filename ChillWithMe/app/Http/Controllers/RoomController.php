@@ -7,13 +7,15 @@ use Illuminate\Support\Facades\Auth;
 use app\Models\User;
 use App\Models\Song;
 use App\Models\Room;
+use App\Models\Message;
+use Pusher\Pusher;
 
 class RoomController extends Controller
 {
     public function index(Request $req)
     {
         $idRoom = $req->idRoom;
-        $room = Room::find($idRoom);
+        $room = Room::where('idRoom', $idRoom);
         $roomMaster = User::find($idRoom);
 
         if (Auth::user()->id == $roomMaster->id) {
@@ -23,6 +25,12 @@ class RoomController extends Controller
                 $newRoom->playing = false;
                 $newRoom->save();
             }
+
+            $room = Room::where('idRoom', $idRoom)->update([
+                'playing' => 0
+            ]);
+
+            $songs = Song::where('idRoom', $idRoom)->delete();
         } else {
             if (!isset($room)) {
                 return redirect('404');
@@ -36,15 +44,43 @@ class RoomController extends Controller
         $user = User::find(Auth::user()->id);
         $user->idRoom = $req->idRoom;
         $user->save();
+
         $songs = Song::where('idRoom', $idRoom)->get();
+
+        $messages = Message::where('idRoom', $idRoom)->orderByDesc('id')->take(100)->get();
+        $messages = $messages->reverse();
+
         return view('room', [
+            'user' => $user,
             'idRoom' => $roomMaster->id,
             'masterRoom' => $roomMaster->name,
-            'songs' => $songs
+            'songs' => $songs,
+            'messages' => $messages
         ]);
     }
 
-    public function addQueue()
+    public function sendMessages(Request $req)
     {
+        $newMessage = new Message;
+        $newMessage->idRoom = $req->idRoom;
+        $newMessage->idUser = $req->idUser;
+        $newMessage->userName = User::find($req->idUser)->name;
+        $newMessage->message = $req->message;
+        $newMessage->save();
+
+        $messages = Message::where('idRoom', $req->idRoom)->orderByDesc('id')->take(100)->get();
+
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            [
+                'cluster' => 'ap1',
+                'encrypted' => true
+            ]
+        );
+        $pusher->trigger('room', 'messages', $messages);
+        return $req;
     }
 }
