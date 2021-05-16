@@ -3,10 +3,10 @@
 @section('content')
 <div class="container-fluid">
     <div class="row d-flex justify-content-center">
-        <img class="register-image mt-3" src="/img/listening.svg" alt="">
+        <img class="col-xl-3 col-lg-3 col-md-4 col-8 mt-3" src="/img/listening.svg" alt="">
     </div>
     <div class="row d-flex justify-content-center mt-3">
-        <form id="form-register" method="POST" action="{{ route('register') }}">
+        <form class="col-xl-6 col-lg-6 col-md-8 col-12" id="form-register" method="POST" action="{{ route('register') }}">
             @csrf
 
             <div class="form-group row">

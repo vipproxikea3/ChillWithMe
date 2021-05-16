@@ -15,7 +15,7 @@ class RoomController extends Controller
     public function index(Request $req)
     {
         $idRoom = $req->idRoom;
-        $room = Room::where('idRoom', $idRoom);
+        $room = Room::where('idRoom', $idRoom)->first();
         $roomMaster = User::find($idRoom);
 
         if (Auth::user()->id == $roomMaster->id) {
@@ -30,7 +30,8 @@ class RoomController extends Controller
                 'playing' => 0
             ]);
 
-            $songs = Song::where('idRoom', $idRoom)->delete();
+            Song::where('idRoom', $idRoom)->delete();
+            Message::where('idRoom', $idRoom)->delete();
         } else {
             if (!isset($room)) {
                 return redirect('404');

@@ -2,12 +2,12 @@
 
 @section('content')
 <div class="room-content container-fluid">
-    <div class="row d-flex">
-        <span class="mr-5"><strong>Chủ phòng: </strong>{{$masterRoom}}</span>
-        <span id="idRoom" data-idroom="{{ $user->idRoom }}"><strong>Mã phòng: </strong>{{$idRoom}}</span>
+    <div class="row">
+        <span class="col-lg-3 col-md-4 col-12"><strong>Chủ phòng: </strong>{{$masterRoom}}</span>
+        <span class="col-lg-3 col-md-4 col-12" id="idRoom" data-idroom="{{ $user->idRoom }}"><strong>Mã phòng: </strong>{{$idRoom}}</span>
     </div>
     <div class="row mt-5">
-        <div class="main-left col-7">
+        <div class="main-left col d-none d-lg-block d-xl-block">
             <div class="row">
                 <form id="form-search">
                     <input placeholder="Tìm kiếm" type="text" name="keyword" id="input-search">
@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <div class="main-right col-5">
+        <div class="main-right col d-lg-block d-xl-block">
             <div style="display: none;" id="player"></div>
             <marquee id="playing-title" class="row playing-title" direction="left"></marquee>
             <div class="row d-flex justify-content-center my-3">
@@ -31,7 +31,7 @@
             </div>
             <div id="queue" class="queue">
                 @foreach ($songs as $song)
-                <div class="row queue-item my-3 px-5">
+                <div class="row queue-item my-3">
                     <div class="queue-item-title d-flex flex-column justify-content-center">
                         <span>{{$song->title}}
                         </span>
@@ -46,6 +46,14 @@
             </div>
         </div>
     </div>
+    <!-- Button switch screen -->
+    <button id="switch-btn" type="button" onclick="switchScreen()" class="
+                            d-block d-lg-none d-xl-none
+                            switch-screen-btn
+                            btn btn-outline-success btn-lg
+                        ">
+        <i class="fa fa-search" aria-hidden="true"></i>
+    </button>
     <!-- Button trigger modal -->
     <button id="showChatBox" type="button" onclick="showChatBox()" class="chat-box-btn btn btn-outline-success btn-lg" data-toggle="modal" data-target="#chatBoxModal">
         <i class="fa fa-comments" aria-hidden="true"></i>

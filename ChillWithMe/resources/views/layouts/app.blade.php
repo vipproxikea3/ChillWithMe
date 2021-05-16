@@ -39,7 +39,7 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md bg-transparent text-white mt-3">
+        <nav class="navbar navbar-dark navbar-expand-md bg-dark text-white mt-3">
             <div class="container">
                 <a class="navbar-brand font-weight-bold" href="{{ url('/') }}">
                     ChillWithMe

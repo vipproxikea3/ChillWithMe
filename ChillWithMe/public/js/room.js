@@ -69,7 +69,7 @@ $("document").ready(function () {
         var thumb = item.snippet.thumbnails.high.url;
         var channelTitle = item.snippet.channelTitle;
         var output =
-            '<div class="row p-2 result-item" data-item-idvideo="' +
+            '<div class="row py-2 result-item" data-item-idvideo="' +
             videoID +
             '" data-item-thumbnail="' +
             thumb +
@@ -78,10 +78,10 @@ $("document").ready(function () {
             '" data-item-channeltitle="' +
             channelTitle +
             '" onclick="addQueue(this)">' +
-            '<img class="result-item-thumbnail" src="' +
+            '<img class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4 result-item-thumbnail" src="' +
             thumb +
             '" alt="">' +
-            '<div class="result-item-info pl-3">' +
+            '<div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 result-item-info pl-3">' +
             '<div class="py-1 result-item-info-title">' +
             '<span class="result-item-info-title-text">' +
             title +
@@ -169,7 +169,7 @@ function renderQueue(queue) {
     var content = "";
     for (var i = 0; i < queue.length; i++) {
         if (queue.length > 0) {
-            var item = `<div class="row queue-item my-3 px-5">
+            var item = `<div class="row queue-item my-3">
                     <div class="queue-item-title d-flex flex-column justify-content-center">
                         <span>${queue[i].title}
                         </span>
@@ -303,4 +303,20 @@ function onPlayerStateChange(event) {
 
 function stopVideo() {
     player.stopVideo();
+}
+
+function switchScreen() {
+    var searchScreen = $(".main-left");
+    var queueScreen = $(".main-right");
+    var switchButton = $("#switch-btn");
+
+    if (searchScreen.hasClass("d-none")) {
+        switchButton.html('<i class="fa fa-music" aria-hidden="true"></i>');
+        searchScreen.removeClass("d-none");
+        queueScreen.addClass("d-none");
+    } else {
+        switchButton.html('<i class="fa fa-search" aria-hidden="true"></i>');
+        queueScreen.removeClass("d-none");
+        searchScreen.addClass("d-none");
+    }
 }

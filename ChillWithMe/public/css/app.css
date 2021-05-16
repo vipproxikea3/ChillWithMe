@@ -43,14 +43,6 @@ a:hover {
     color: #fff !important;
 }
 
-#form-inputIdRoom {
-    width: 30%;
-}
-
-.welcome-image {
-    width: 30%;
-}
-
 #inputIdRoom {
     box-sizing: border-box;
     margin-top: 5rem;
@@ -60,14 +52,6 @@ a:hover {
     border-radius: 2rem;
     background: #121212;
     color: #fff !important;
-}
-
-#form-login {
-    width: 30%;
-}
-
-.login-image {
-    width: 20%;
 }
 
 .input-login {
@@ -90,14 +74,6 @@ a:hover {
     height: 4rem;
     border-radius: 2rem;
     border-width: 2px;
-}
-
-#form-register {
-    width: 30%;
-}
-
-.register-image {
-    width: 20%;
 }
 
 .input-register {
@@ -145,12 +121,13 @@ a:hover {
 }
 
 .room-content {
-    padding-left: 5rem !important;
-    padding-right: 5rem !important;
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
 }
 
 .main-left {
     padding-left: 0px !important;
+    padding-right: 0px !important;
 }
 
 #form-search {
@@ -181,8 +158,7 @@ a:hover {
     border-left-style: solid;
     border-color: transparent;
     background: transparent;
-    height: 6.5rem;
-    display: flex;
+    height: auto;
     align-items: center;
     transition: 0.5s;
 }
@@ -196,28 +172,17 @@ a:hover {
 
 .result-item-thumbnail {
     background: transparent;
-    flex-basis: 10rem;
-    height: 100%;
     object-fit: cover;
 }
 
 .result-item-info {
     background: transparent;
-    flex-basis: 1rem;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    flex-grow: 1;
 }
 
 .result-item-info-title {
     background: transparent;
     font-size: 0.9rem;
     width: 100%;
-    flex-basis: 1rem;
-    flex-grow: 3;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .result-item-info-channel {
@@ -225,10 +190,6 @@ a:hover {
     font-size: 0.75rem;
     color: #aaa;
     width: 100%;
-    flex-basis: 2rem;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column-reverse;
 }
 
 .main-right {
@@ -236,8 +197,8 @@ a:hover {
 }
 
 .playing-title {
-    margin-left: 5rem !important;
-    margin-right: 5rem !important;
+    margin-left: 2rem !important;
+    margin-right: 2rem !important;
 }
 
 .playing-disk {
@@ -271,7 +232,7 @@ a:hover {
     display: flex;
     flex-direction: row;
     align-items: center;
-    height: 3rem;
+    height: auto;
 }
 
 .queue-item-title {
@@ -324,4 +285,15 @@ a:hover {
     border-radius: 50% !important;
     color: #f12949 !important;
     border-color: #f12949 !important;
+}
+
+.switch-screen-btn {
+    background: #121212 !important;
+    position: fixed;
+    z-index: 9;
+    left: 3rem;
+    bottom: 3rem;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50% !important;
 }
