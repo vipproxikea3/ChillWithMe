@@ -22,7 +22,10 @@
             <div style="display: none;" id="player"></div>
             <marquee id="playing-title" class="row playing-title" direction="left"></marquee>
             <div class="row d-flex justify-content-center my-3">
-                <img id="playing-disk" class="playing-disk" alt="">
+                <img id="playing-thumb" class="d-block d-lg-none d-xl-none playing-thumb" alt="">
+            </div>
+            <div class="row d-flex justify-content-center my-3">
+                <img id="playing-disk" class="d-none d-lg-block d-xl-block playing-disk" alt="">
             </div>
             <div class="row d-flex justify-content-center my-3">
                 <button onclick="nextSong()" style="border: none;" type="button" class="btn btn-outline-success">
@@ -64,7 +67,7 @@
         <div class="modal-dialog" role="document">
             <div class="box-chat modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Trò chuyện</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Trò chuyện - <i class="fa fa-users" aria-hidden="true"></i> {{$countUser}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

@@ -15,8 +15,12 @@ class RoomController extends Controller
     public function index(Request $req)
     {
         $idRoom = $req->idRoom;
+        if (!isset($idRoom) || $idRoom == '')
+            return redirect('404');
         $room = Room::where('idRoom', $idRoom)->first();
         $roomMaster = User::find($idRoom);
+        if (!isset($roomMaster))
+            return redirect('404');
 
         if (Auth::user()->id == $roomMaster->id) {
             if (!isset($room)) {
@@ -38,6 +42,9 @@ class RoomController extends Controller
             } else {
                 if ($roomMaster->idRoom != $idRoom) {
                     return redirect('404');
+                } else {
+                    if ($room->password != $req->passRoom)
+                        return back();
                 }
             }
         }
@@ -51,12 +58,15 @@ class RoomController extends Controller
         $messages = Message::where('idRoom', $idRoom)->orderByDesc('id')->take(100)->get();
         $messages = $messages->reverse();
 
+        $count = User::where('idRoom', $req->idRoom)->count();
+
         return view('room', [
             'user' => $user,
             'idRoom' => $roomMaster->id,
             'masterRoom' => $roomMaster->name,
             'songs' => $songs,
-            'messages' => $messages
+            'messages' => $messages,
+            'countUser' => $count
         ]);
     }
 

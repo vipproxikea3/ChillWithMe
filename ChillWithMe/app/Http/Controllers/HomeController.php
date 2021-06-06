@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Room;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +26,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $room = Room::where('idRoom', Auth::user()->id)->first();
+        $user = User::where('id', Auth::user()->id)->first();
+        $user->idRoom = NULL;
+        $user->save();
+        if (!isset($room)) {
+            $room = new Room;
+            $room->password = NULL;
+        }
+        return view('home', ['room' => $room]);
+    }
+
+    public function updatePass(Request $req)
+    {
+        $room = Room::where('idRoom', Auth::user()->id)->first();
+        $room->password = $req->newRoomPass;
+        $room->save();
+        return back();
     }
 }

@@ -8,6 +8,8 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SongController;
 
+use App\Models\User;
+
 use App\Events\TestEvent;
 use Pusher\Pusher;
 
@@ -25,12 +27,18 @@ use Pusher\Pusher;
 Auth::routes();
 
 Route::get('/', function () {
+    if (Auth::user() != null) {
+        $user = User::where('id', Auth::user()->id)->first();
+        $user->idRoom = NULL;
+        $user->save();
+    }
     return view('welcome');
 });
 
 Route::middleware(['middleware' => 'auth'])->group(function () {
 
     // Home
+    Route::post('/home/pass', [HomeController::class, 'updatePass']);
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     // Song
@@ -39,7 +47,7 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
     Route::post('/songs/next', [SongController::class, 'nextSong']);
 
     // Room
-    Route::get('/rooms', [RoomController::class, 'index']);
+    Route::post('/rooms', [RoomController::class, 'index']);
     Route::post('/rooms/messages', [RoomController::class, 'sendMessages']);
 
     // User

@@ -271,6 +271,7 @@ function play(video) {
         });
     }
 
+    $("#playing-thumb").attr("src", thumbnail);
     $("#playing-disk").attr("src", thumbnail);
     $("#playing-title").html("");
     $("#playing-title").append(title);
