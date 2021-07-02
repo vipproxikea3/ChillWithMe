@@ -39,6 +39,8 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
 
     // Home
     Route::post('/home/pass', [HomeController::class, 'updatePass']);
+    Route::get('/password', [HomeController::class, 'password']);
+    Route::post('/home/change-password', [HomeController::class, 'change_password']);
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     // Song
