@@ -242,6 +242,91 @@ a:hover {
     animation-timing-function: linear;
 }
 
+#input-current-password {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #28a745;
+    padding: 0.5rem 2rem;
+    height: 4rem;
+    border-radius: 2rem;
+    background: #121212;
+    color: #fff !important;
+}
+
+#input-new-password {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #28a745;
+    padding: 0.5rem 2rem;
+    height: 4rem;
+    border-radius: 2rem;
+    background: #121212;
+    color: #fff !important;
+}
+
+#input-confirm-new-password {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #28a745;
+    padding: 0.5rem 2rem;
+    height: 4rem;
+    border-radius: 2rem;
+    background: #121212;
+    color: #fff !important;
+}
+
+.input-current-password {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #28a745;
+    padding: 0.5rem 2rem;
+    height: 4rem;
+    border-radius: 2rem;
+    background: #121212;
+    color: #fff !important;
+}
+
+.input-current-password:focus {
+    outline: none;
+}
+
+.input-new-password {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #28a745;
+    padding: 0.5rem 2rem;
+    height: 4rem;
+    border-radius: 2rem;
+    background: #121212;
+    color: #fff !important;
+}
+
+.input-new-password:focus {
+    outline: none;
+}
+
+.input-confirm-new-password {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #28a745;
+    padding: 0.5rem 2rem;
+    height: 4rem;
+    border-radius: 2rem;
+    background: #121212;
+    color: #fff !important;
+}
+
+.input-confirm-new-password:focus {
+    outline: none;
+}
+
+#password-btn {
+    width: 100%;
+    height: 4rem;
+    border-radius: 2rem;
+    border-width: 2px;
+}
+
 @keyframes spin {
     from {
         transform: rotate(0deg);

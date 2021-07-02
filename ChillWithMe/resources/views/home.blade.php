@@ -55,7 +55,7 @@
                     <div class="profile-field py-1 px-3">Mật khẩu</div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <div><a href="">Đổi mật khẩu</a></div>
+                    <div><a href="/password">Đổi mật khẩu</a></div>
                 </div>
             </div>
         </div>
