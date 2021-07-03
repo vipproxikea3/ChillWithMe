@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\UserController;
@@ -25,6 +26,13 @@ use Pusher\Pusher;
 */
 
 Auth::routes();
+
+// Login
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/user-login', [LoginController::class, 'authenticate']);
+
+// Register
+
 
 Route::get('/', function () {
     if (Auth::user() != null) {
