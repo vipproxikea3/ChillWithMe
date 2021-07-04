@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Pusher\Pusher;
+
 
 class HomeController extends Controller
 {
@@ -32,6 +34,18 @@ class HomeController extends Controller
         $user = User::where('id', Auth::user()->id)->first();
         $user->idRoom = NULL;
         $user->save();
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            [
+                'cluster' => 'ap1',
+                'encrypted' => true
+            ]
+        );
+        $pusher->trigger('room', 'member', null);
+
         if (!isset($room)) {
             $room = new Room;
             $room->password = NULL;
@@ -54,41 +68,40 @@ class HomeController extends Controller
 
     public function change_password(Request $req)
     {
-        $validator = Validator::make($req->all(),[
-            'currentpassword'=>[
-                'required', 
-                function($attribute, $value, $fail){
-                    if(!Hash::check($value, Auth::user()->password)){
+        $validator = Validator::make($req->all(), [
+            'currentpassword' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (!Hash::check($value, Auth::user()->password)) {
                         return $fail(__('Sai mật khẩu hiện tại'));
                     }
-                },  
+                },
                 'min:8',
                 'max:30'
             ],
-            'newpassword'=>['required','min:8','max:30'],
-            'cnewpassword'=>['required','same:newpassword']
-        ],[
-            'currentpassword.required'=>'Nhập mật khẩu hiện tại',
-            'currentpassword.min'=>'Mật khẩu hiện tại có ít nhất 8 kí tự',
-            'currentpassword.max'=>'Mật khẩu hiện tại có tối đa 30 kí tự',
-            'newpassword.required'=>'Nhập mật khẩu mới',
-            'newpassword.min'=>'Mật khẩu mới có ít nhất 8 kí tự',
-            'newpassword.max'=>'Mật khẩu mới có tối đa 30 kí tự',
-            'cnewpassword.required'=>'Vui lòng xác nhận mật khẩu',
-            'cnewpassword.min'=>'Mật khẩu mới có ít nhất 8 kí tự',
-            'cnewpassword.same'=>'Xác nhận mật khẩu trùng với mật khẩu mới',
+            'newpassword' => ['required', 'min:8', 'max:30'],
+            'cnewpassword' => ['required', 'same:newpassword']
+        ], [
+            'currentpassword.required' => 'Nhập mật khẩu hiện tại',
+            'currentpassword.min' => 'Mật khẩu hiện tại có ít nhất 8 kí tự',
+            'currentpassword.max' => 'Mật khẩu hiện tại có tối đa 30 kí tự',
+            'newpassword.required' => 'Nhập mật khẩu mới',
+            'newpassword.min' => 'Mật khẩu mới có ít nhất 8 kí tự',
+            'newpassword.max' => 'Mật khẩu mới có tối đa 30 kí tự',
+            'cnewpassword.required' => 'Vui lòng xác nhận mật khẩu',
+            'cnewpassword.min' => 'Mật khẩu mới có ít nhất 8 kí tự',
+            'cnewpassword.same' => 'Xác nhận mật khẩu trùng với mật khẩu mới',
         ]);
 
-        if($validator->fails()){
-            return response()->json(['status'=>0,'error'=>$validator->errors()->toArray()]);
+        if ($validator->fails()) {
+            return response()->json(['status' => 0, 'error' => $validator->errors()->toArray()]);
         } else {
-            $update = User::find(Auth::user()->id)->update(['password'=>Hash::make($req->newpassword)]);
+            $update = User::find(Auth::user()->id)->update(['password' => Hash::make($req->newpassword)]);
 
-            if(!$update)
-            {
-                return response()->json(['status'=>0, 'msg'=>'Something went wrong. Failed to update password to db']);
+            if (!$update) {
+                return response()->json(['status' => 0, 'msg' => 'Something went wrong. Failed to update password to db']);
             } else {
-                return response()->json(['status'=>1, 'msg'=>'Your password has been changed successfully']);
+                return response()->json(['status' => 1, 'msg' => 'Your password has been changed successfully']);
             }
         }
     }

@@ -58,7 +58,16 @@ class RoomController extends Controller
         $messages = Message::where('idRoom', $idRoom)->orderByDesc('id')->take(100)->get();
         $messages = $messages->reverse();
 
-        $count = User::where('idRoom', $req->idRoom)->count();
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            [
+                'cluster' => 'ap1',
+                'encrypted' => true
+            ]
+        );
+        $pusher->trigger('room', 'member', null);
 
         return view('room', [
             'user' => $user,
@@ -66,7 +75,6 @@ class RoomController extends Controller
             'masterRoom' => $roomMaster->name,
             'songs' => $songs,
             'messages' => $messages,
-            'countUser' => $count
         ]);
     }
 
@@ -93,5 +101,39 @@ class RoomController extends Controller
         );
         $pusher->trigger('room', 'messages', $messages);
         return $req;
+    }
+
+    public function getOnlineMember(Request $req)
+    {
+        $idRoom = $req->idRoom;
+        if (!isset($idRoom) || $idRoom == '')
+            return redirect('404');
+        $members = User::where('idRoom', $idRoom)->get();
+        return $members;
+    }
+
+    public function kickMember(Request $req)
+    {
+        $idRoom = $req->idRoom;
+        $idMember = $req->idMember;
+        if (!isset($idRoom) || $idRoom == '')
+            return redirect('404');
+        if (!isset($idMember) || $idMember == '')
+            return redirect('404');
+        $user = User::where('id', $idMember)->first();
+        if (isset($user) && $user->idRoom == $idRoom) {
+            $user->idRoom = NULL;
+        }
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            [
+                'cluster' => 'ap1',
+                'encrypted' => true
+            ]
+        );
+        $pusher->trigger('room', 'kick', ['idRoom' => $idRoom, 'idUser' => $idMember]);
+        return 'success';
     }
 }

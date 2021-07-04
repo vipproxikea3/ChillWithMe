@@ -67,10 +67,13 @@
         <div class="modal-dialog" role="document">
             <div class="box-chat modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Trò chuyện - <i class="fa fa-users" aria-hidden="true"></i> {{$countUser}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <div class="dropdown">
+                        <h5 id="chatbox-title" class="chatbox-title modal-title dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        </h5>
+                        <div id="chatbox-dropdow-menu" class="chatbox-dropdown-menu dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <p class="dropdown-item-member dropdown-item" data-id="2">Đồng Nguyễn Mộc Quyên</p>
+                        </div>
+                    </div>
                 </div>
                 <div id="box-chat-body" class="box-chat-body modal-body">
                     @foreach ($messages as $message)

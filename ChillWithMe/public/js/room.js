@@ -26,7 +26,22 @@ channel.bind("messages", function (data) {
     renderMessages(data);
 });
 
+channel.bind("member", function () {
+    renderOnlineMember();
+});
+
+channel.bind("kick", function (data) {
+    console.log(data);
+    let idUser = $("#navbarDropdown").attr("data-iduser");
+    if (data.idUser == idUser) {
+        window.location.href = "/";
+    }
+});
+
 $("document").ready(function () {
+    // render member
+    renderOnlineMember();
+
     // Submit search form
     $("#form-search").on("submit", function (e) {
         e.preventDefault();
@@ -240,6 +255,66 @@ function renderMessages(messages) {
     });
     $("#box-chat-body").append(content);
     console.log(messages);
+}
+
+// render member online
+function renderOnlineMember() {
+    var idRoom = $("#idRoom").attr("data-idroom");
+    let idUser = $("#navbarDropdown").attr("data-iduser");
+    let idMaster = $("#idRoom").attr("data-idroom");
+    console.log(idMaster);
+    $.ajax({
+        type: "GET",
+        url: "/rooms/online-member",
+        data: {
+            idRoom: idRoom,
+        },
+        success: function (data) {
+            let boxChatMenu = $("#chatbox-dropdow-menu");
+            boxChatMenu.html("");
+            let content = "";
+            data.forEach((member) => {
+                let item = "";
+                if (idUser == idMaster) {
+                    item =
+                        '<p class="dropdown-item-member dropdown-item" onclick="kickMember(' +
+                        member.id +
+                        ')" data-id="' +
+                        member.id +
+                        '">' +
+                        member.name +
+                        "</p>";
+                } else {
+                    item =
+                        '<p class="dropdown-item-member dropdown-item" data-id="' +
+                        member.id +
+                        '">' +
+                        member.name +
+                        "</p>";
+                }
+
+                content += item;
+            });
+            boxChatMenu.append(content);
+            $("#chatbox-title").html("");
+            $("#chatbox-title").append(
+                "Trò chuyện - " + data.length + " Online"
+            );
+        },
+    });
+}
+
+function kickMember(idUser) {
+    var idRoom = $("#idRoom").attr("data-idroom");
+    $.ajax({
+        type: "GET",
+        url: "/rooms/kick-member",
+        data: {
+            idRoom: idRoom,
+            idMember: idUser,
+        },
+        success: function (data) {},
+    });
 }
 
 // YOUTUBE

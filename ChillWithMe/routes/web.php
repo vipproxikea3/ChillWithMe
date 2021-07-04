@@ -42,6 +42,16 @@ Route::get('/', function () {
         $user = User::where('id', Auth::user()->id)->first();
         $user->idRoom = NULL;
         $user->save();
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            [
+                'cluster' => 'ap1',
+                'encrypted' => true
+            ]
+        );
+        $pusher->trigger('room', 'member', null);
     }
     return view('welcome');
 });
@@ -62,6 +72,8 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
     // Room
     Route::post('/rooms', [RoomController::class, 'index']);
     Route::post('/rooms/messages', [RoomController::class, 'sendMessages']);
+    Route::get('/rooms/online-member', [RoomController::class, 'getOnlineMember']);
+    Route::get('/rooms/kick-member', [RoomController::class, 'kickMember']);
 
     // User
     Route::get('/me', [UserController::class, 'index']);
