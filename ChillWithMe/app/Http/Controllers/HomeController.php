@@ -56,7 +56,8 @@ class HomeController extends Controller
     {
         $validator = Validator::make($req->all(),[
             'currentpassword'=>[
-                'required', function($attribute, $value, $fail){
+                'required', 
+                function($attribute, $value, $fail){
                     if(!Hash::check($value, Auth::user()->password)){
                         return $fail(__('Sai mật khẩu hiện tại'));
                     }
@@ -64,8 +65,8 @@ class HomeController extends Controller
                 'min:8',
                 'max:30'
             ],
-            'newpassword'=>'required|min:8|max:30',
-            'cnewpassword'=>'required|same:newpassword'
+            'newpassword'=>['required','min:8','max:30'],
+            'cnewpassword'=>['required','same:newpassword']
         ],[
             'currentpassword.required'=>'Nhập mật khẩu hiện tại',
             'currentpassword.min'=>'Mật khẩu hiện tại có ít nhất 8 kí tự',

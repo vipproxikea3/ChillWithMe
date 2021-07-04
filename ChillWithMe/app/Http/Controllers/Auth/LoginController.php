@@ -73,7 +73,7 @@ class LoginController extends Controller
                 'email'=>$req->input('email'),
                 'password'=>$req->input('password')
             ])) {
-                return response()->json(['status'=>2, 'msg'=>'Login successfully']);
+                return response()->json(['status'=>2, 'msg'=>'Login Successfully']);
             } else {
                 return response()->json(['status'=>3, 'msg'=>'Something went wrong. Can not login with your email and password']);
             }
