@@ -414,3 +414,23 @@ a:hover {
 .modal {
     color: #333 !important;
 }
+
+.chatbox-title:hover {
+    cursor: pointer;
+}
+
+.dropdown-item-member {
+    background-color: #fff !important;
+    color: #333 !important;
+}
+
+.dropdown-item-member:hover {
+    cursor: pointer;
+    background-color: #fff !important;
+    color: red !important;
+}
+
+.chatbox-dropdown-menu {
+    max-height: 20rem;
+    overflow-y: scroll;
+}
