@@ -14,12 +14,6 @@
                 name="name" value="{{ old('name') }}" autocomplete="name">
 
                 <div><span class="text-danger error-text name_error ml-4"></span></div>
-                {{-- @error('name') is-invalid @enderror
-                @error('name')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror --}}
             </div>
 
             <div class="form-group row">
@@ -27,12 +21,6 @@
                 name="email" value="{{ old('email') }}" autocomplete="email">
                 
                 <div><span class="text-danger error-text email_error ml-4"></span></div>
-                {{-- @error('email') is-invalid @enderror
-                @error('email')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror --}}
             </div>
 
             <div class="form-group row">
@@ -40,13 +28,6 @@
                 name="password" autocomplete="new-password">
 
                 <div><span class="text-danger error-text password_error ml-4"></span></div>
-
-                {{-- @error('password') is-invalid @enderror
-                @error('password')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror --}}
             </div>
 
             <div class="form-group row">
