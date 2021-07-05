@@ -36,7 +36,7 @@
                     <div class="profile-field py-1 px-3">Mã phòng</div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <span>{{Auth::user()->idRoom}}</span>
+                    <span>{{$room->id}}</span>
                 </div>
             </div>
             <div class="row justify-content-center my-3">
