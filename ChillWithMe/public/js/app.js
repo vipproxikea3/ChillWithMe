@@ -13,6 +13,10 @@ $(document).ready(function () {
         $("#final-form-inputIdRoom").submit();
     });
 
+    $("#updateName-btn").click(() => {
+        $("#form-update-name").submit();
+    });
+
     $('#form-password').on('submit', function(e) {
         e.preventDefault();
 
