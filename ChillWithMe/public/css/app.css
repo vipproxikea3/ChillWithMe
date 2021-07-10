@@ -434,3 +434,15 @@ a:hover {
     max-height: 20rem;
     overflow-y: scroll;
 }
+
+#history-btn {
+    height: 4rem;
+    border-radius: 2rem;
+    border-width: 2px;
+    margin-top: 5rem;
+}
+
+.user-join-room:hover {
+    color: #28a745;
+    cursor: pointer;
+}
