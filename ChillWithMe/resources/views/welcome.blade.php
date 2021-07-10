@@ -25,7 +25,7 @@
                     <form id="final-form-inputIdRoom" action="/rooms" method="POST">
                         @csrf
                         <div class="form-group">
-                            <input id="final-inputIdRoom" type="number" class="form-control" name="idRoom" placeholder="Mã phòng" required>
+                            <input id="final-inputIdRoom" type="number" class="form-control d-none" name="idRoom" placeholder="Mã phòng" required>
                         </div>
                         <div class="form-group">
                             <input id="final-inputPassRoom" type="number" class="form-control" name="passRoom" placeholder="Mật khẩu phòng">

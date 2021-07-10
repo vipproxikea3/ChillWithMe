@@ -21,6 +21,9 @@
                 </div>
                 <div class="col-lg-3 col-sm-6">
                     <span>{{Auth::user()->name}}</span>
+                    <button class="border-0 btn btn-outline-success" data-toggle="modal" data-target="#editNameModal">
+                        <i class="fa fa-wrench" aria-hidden="true"></i>
+                    </button>
                 </div>
             </div>
             <div class="row justify-content-center my-3">
@@ -55,7 +58,7 @@
                     <div class="profile-field py-1 px-3">Mật khẩu</div>
                 </div>
                 <div class="col-lg-3 col-sm-6">
-                    <div><a href="/password">Đổi mật khẩu</a></div>
+                    <a href="/password">Đổi mật khẩu</a>
                 </div>
             </div>
         </div>
@@ -78,6 +81,27 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="updateRoomPass-btn" class="btn btn-outline-success"><i class="fa fa-check" aria-hidden="true"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editNameModal" tabindex="-1" role="dialog" aria-labelledby="editNameModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Đổi họ và tên</h5>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-update-name" action="/home/name" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="input-name" name="new_name" placeholder="Nhập họ và tên mới">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="updateName-btn" class="btn btn-outline-success"><i class="fa fa-check" aria-hidden="true"></i></button>
                 </div>
             </div>
         </div>

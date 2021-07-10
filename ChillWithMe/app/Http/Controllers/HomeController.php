@@ -61,6 +61,19 @@ class HomeController extends Controller
         return back();
     }
 
+    public function updateName(Request $req)
+    {
+        if($req->new_name == "")
+        {
+            return back();
+        } else {
+            $user = User::where('id', Auth::user()->id)->first();
+            $user->name = $req->new_name;
+            $user->save();
+            return back();
+        }       
+    }
+
     public function password()
     {
         return view('password');
