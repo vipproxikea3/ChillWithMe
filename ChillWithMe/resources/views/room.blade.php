@@ -71,7 +71,6 @@
                         <h5 id="chatbox-title" class="chatbox-title modal-title dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         </h5>
                         <div id="chatbox-dropdow-menu" class="chatbox-dropdown-menu dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <p class="dropdown-item-member dropdown-item" data-id="2">Đồng Nguyễn Mộc Quyên</p>
                         </div>
                     </div>
                 </div>

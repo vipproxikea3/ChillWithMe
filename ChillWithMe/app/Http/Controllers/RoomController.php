@@ -8,6 +8,7 @@ use app\Models\User;
 use App\Models\Song;
 use App\Models\Room;
 use App\Models\Message;
+use App\Models\UserJoinRoom;
 use Pusher\Pusher;
 
 class RoomController extends Controller
@@ -52,6 +53,18 @@ class RoomController extends Controller
         $user = User::find(Auth::user()->id);
         $user->idRoom = $req->idRoom;
         $user->save();
+
+        $userJoinRooms = UserJoinRoom::where([
+            ["idUser", Auth::user()->id],
+            ["idRoom", $req->idRoom]
+        ])->first();
+
+        if (!isset($userJoinRooms)) {
+            $userJoinRoom = new UserJoinRoom();
+            $userJoinRoom->idUser = Auth::user()->id;
+            $userJoinRoom->idRoom = $req->idRoom;
+            $userJoinRoom->save();
+        }
 
         $songs = Song::where('idRoom', $idRoom)->get();
 

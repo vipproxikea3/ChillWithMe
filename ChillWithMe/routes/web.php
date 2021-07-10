@@ -12,6 +12,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SongController;
 
 use App\Models\User;
+use App\Models\UserJoinRoom;
 
 use App\Events\TestEvent;
 use Pusher\Pusher;
@@ -52,6 +53,12 @@ Route::get('/', function () {
             ]
         );
         $pusher->trigger('room', 'member', null);
+
+        $userJoinRooms = UserJoinRoom::where('idUser', Auth::user()->id)->get();
+        foreach ($userJoinRooms as &$item) {
+            $item->name = User::where('id', $item->idRoom)->first()->name;
+        }
+        return view('welcome')->with(['userJoinRooms' => $userJoinRooms]);
     }
     return view('welcome');
 });
