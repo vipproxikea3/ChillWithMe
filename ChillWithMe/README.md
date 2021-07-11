@@ -16,7 +16,7 @@
 ## Sinh viên thực hiện
 
 1. Đồng Quang Quý - 18521314
-2. Hà Minh Quang
-3. Dương
-4. Hiếu
-5. Nhân
+2. Hà Minh Quang - 18521293
+3. Nguyễn Thị Thùy Dương - 18520648
+4. Trần Minh Hiếu - 18520281
+5. Phạm Xuân Nhân - 18520648
